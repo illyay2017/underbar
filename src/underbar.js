@@ -102,7 +102,24 @@
 
   // Produce a duplicate-free version of the array.
   _.uniq = function(array, isSorted, iterator) {
-    
+    var unique = [];
+    if (!isSorted || !iterator) {
+      _.each(array, (item, index) => {
+        if (_.indexOf(unique, item) === -1) {
+          unique.push(item);
+        }
+      });
+    } else {
+      var uniqueResults = [];
+      _.each(array, (item, index) => {
+        var result = iterator(item);
+        if (_.indexOf(uniqueResults, result) === -1) {
+          uniqueResults.push(result);
+          unique.push(item);
+        }
+      });
+    }
+    return unique;
   };
 
 
